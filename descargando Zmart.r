@@ -7,54 +7,133 @@ setwd("C:/Users/Alumno/Desktop/Trabajo_BigData")
 library(rvest)
 library(gdata)
 
-# descargando pagina zmart
-zmart <- read_html("https://www.zmart.cl/JuegosPS4")
 
-# listados de productos
-listadoJuegosZmart <- html_nodes(zmart, css = "#ProdDisplayType5_32641_Products")
+# DESCARGANDO PAGINA ZMART (JUEGOS PS4)
+zmartPs4 <- read_html("https://www.zmart.cl/JuegosPS4")
 
-# titulos de los productos
-titulosZmart <- html_nodes(listadoJuegosZmart, ".BoxProductoS2_Descripcion")
-textTitulosZmart <- html_text(titulosZmart)
+# LISTADO DE PRODUCTOS PS4
+listadoPs4 <- html_nodes(zmartPs4, css = "#ProdDisplayType5_32641_Products")
 
-for (n in 1:length(textTitulosZmart)) {
-  print(textTitulosZmart[n])
+# TITULOS DE LOS PRODUCTOS PS4
+titulosPs4 <- html_nodes(listadoPs4, ".BoxProductoS2_Descripcion")
+textoTitulosPs4 <- html_text(titulosPs4)
+
+for (n in 1:length(textoTitulosPs4)) {
+  print(textoTitulosPs4[n])
 }
 
 
-# precios de los productos
-preciosZmart <- html_nodes(listadoJuegosZmart, ".BoxProductoS2_Precio")
-textPreciosZmart <- html_text(preciosZmart)
+# PRECIOS DE LOS PRODUCTOS PS4
+preciosPs4 <- html_nodes(listadoPs4, ".BoxProductoS2_Precio")
+textoPreciosPs4 <- html_text(preciosPs4)
 
-for (k in 1:length(textPreciosZmart)) {
-  print(textPreciosZmart[k])
+for (k in 1:length(textoPreciosPs4)) {
+  print(textoPreciosPs4[k])
 }
 
-# [almacenando informacion 1] creacion de un dataframe
+# [ALMACENANDO INFORMACION 1] CREACION DE UN DATAFRAME DE PS4
 
-todosLosDatos <- data.frame()
+todosLosDatosPs4 <- data.frame()
 
 
-for (i in 1:length(textTitulosZmart)) {
+for (i in 1:length(textoTitulosPs4)) {
   print("========== ITEM ==========")
   
   # nombre del juego:
-  print(textTitulosZmart[i])
+  print(textoTitulosPs4[i])
   
   # precio:
-  textPreciosZmart <- gsub("[.]","",textPreciosZmart)
-  textPreciosZmart <- as.numeric(textPreciosZmart)
-  print(textPreciosZmart[i])
+  textoPreciosPs4 <- gsub("[.]","",textoPreciosPs4)
+  textoPreciosPs4 <- as.numeric(textoPreciosPs4)
+  print(textoPreciosPs4[i])
   
-  # [almacenando informacion 2] creando dataframe con los detalles
-  # de cada item
+  # [ALMACENANDO INFORMACION 2] CREANDO DATAFRAME CON LOS DETALLES
+  # DE CADA ITEM
   
-  itemZmart <- data.frame(titulosZmart = textTitulosZmart, preciosZmart = textPreciosZmart)
+  itemPs4 <- data.frame(titulosPs4 = textoTitulosPs4, 
+                             preciosPs4 = textoPreciosPs4)
   
-  # [almacenando informacion 3] almacenando la info del producto con 
-  # con los datos totales
+  # [ALMACENANDO INFORMACION 3] ALMACENANDO LA INFO DEL PRODUCTO CON 
+  # LOS DATOS TOTALES
   
-  todosLosDatos <- rbind(todosLosDatos,itemZmart)
+  todosLosDatosPs4 <- rbind(todosLosDatosPs4,itemPs4)
   break = 32
 }
+
+library(dplyr)
+todosLosDatosPs4 <- mutate(todosLosDatosPs4, plataforma = "PlayStation 4")
+
+
+
+############################################################################
+
+
+
+# DESCARGANDO PAGINA ZMART (JUEGOS XBOX ONE)
+zmartXbox <- read_html("https://www.zmart.cl/JuegosXBONE")
+
+# LISTADO DE PRODUCTOS XBOX ONE
+listadoXbox <- html_nodes(zmartXbox, css = "#ProdDisplayType5_32654_Products")
+
+# TITULOS DE LOS PRODUCTOS XBOX ONE
+tituloDelJuego <- html_nodes(listadoXbox, ".BoxProductoS2_Descripcion")
+textoTitulosXbox <- html_text(tituloDelJuego)
+
+for (x in 1:length(textoTitulosXbox)) {
+  print(textoTitulosXbox[x])
+}
+
+
+
+# PRECIOS DE LOS PRODUCTOS XBOX ONE
+precioDelJuego <- html_nodes(listadoXbox, ".BoxProductoS2_Precio")
+textoPreciosXbox <- html_text(precioDelJuego)
+
+for (o in 1:length(textoPreciosXbox)) {
+  print(textoPreciosXbox[o])
+}
+
+
+
+# [ALMACENANDO INFORMACION 1] CREACION DE UN DATAFRAME DE XBOX ONE
+
+todosLosDatosXbox <- data.frame()
+
+
+for (u in 1:length(textoTitulosXbox)) {
+  print("========== ITEM ==========")
+  
+  # nombre del juego:
+  print(textoTitulosXbox[u])
+  
+  # precio:
+  textoPreciosXbox <- gsub("[.]","",textoPreciosXbox)
+  textoPreciosXbox <- as.numeric(textoPreciosXbox)
+  print(textoPreciosXbox[o])
+  
+  # [ALMACENANDO INFORMACION 2] CREANDO DATAFRAME CON LOS DETALLES
+  # DE CADA ITEM
+  
+  itemXbox <- data.frame(tituloDelJuego = textoTitulosXbox, 
+                         precioDelJuego = textoPreciosXbox)
+  
+  # [ALMACENANDO INFORMACION 3] ALMACENANDO LA INFO DEL PRODUCTO CON 
+  # LOS DATOS TOTALES
+  
+  todosLosDatosXbox <- rbind(todosLosDatosXbox,itemXbox)
+  break = 32
+  
+}
+
+library(dplyr)
+todosLosDatosXbox <- mutate(todosLosDatosXbox, plataforma = "XBOX ONE")
+
+
+
+
+
+
+
+
+
 
