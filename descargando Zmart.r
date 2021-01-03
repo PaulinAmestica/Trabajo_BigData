@@ -1,3 +1,4 @@
+#  Configuracion espacio de trabajo
 setwd("C:/Users/Alumno/Desktop/Trabajo_BigData")
 
 #instalarndo Rvest
@@ -50,8 +51,9 @@ for (i in 1:length(textoTitulosPs4)) {
   # [ALMACENANDO INFORMACION 2] CREANDO DATAFRAME CON LOS DETALLES
   # DE CADA ITEM
   
-  itemPs4 <- data.frame(titulosPs4 = textoTitulosPs4, 
-                             preciosPs4 = textoPreciosPs4)
+  itemPs4 <- data.frame(titulosPs4 = textoTitulosPs4,
+                        preciosPs4 = textoPreciosPs4,
+                        plataforma = "PlayStation 4")
   
   # [ALMACENANDO INFORMACION 3] ALMACENANDO LA INFO DEL PRODUCTO CON 
   # LOS DATOS TOTALES
@@ -60,8 +62,6 @@ for (i in 1:length(textoTitulosPs4)) {
   break = 32
 }
 
-library(dplyr)
-todosLosDatosPs4 <- mutate(todosLosDatosPs4, plataforma = "PlayStation 4")
 
 
 
@@ -111,11 +111,13 @@ for (u in 1:length(textoTitulosXbox)) {
   textoPreciosXbox <- as.numeric(textoPreciosXbox)
   print(textoPreciosXbox[o])
   
+
   # [ALMACENANDO INFORMACION 2] CREANDO DATAFRAME CON LOS DETALLES
   # DE CADA ITEM
   
   itemXbox <- data.frame(tituloDelJuego = textoTitulosXbox, 
-                         precioDelJuego = textoPreciosXbox)
+                         precioDelJuego = textoPreciosXbox,
+                         plataforma = "XBOX ONE")
   
   # [ALMACENANDO INFORMACION 3] ALMACENANDO LA INFO DEL PRODUCTO CON 
   # LOS DATOS TOTALES
@@ -125,15 +127,13 @@ for (u in 1:length(textoTitulosXbox)) {
   
 }
 
-library(dplyr)
-todosLosDatosXbox <- mutate(todosLosDatosXbox, plataforma = "XBOX ONE")
 
 
 
+#install.packages("xlsx")
+library(xlsx)
 
-
-
-
-
-
+# PASAR DATOS DE "R" A "EXCEL"
+write.xlsx(todosLosDatosPs4, "todosLosDatosPs4 en xls_1.xlsx")
+write.xlsx(todosLosDatosXbox, "todosLosDatosXbox en xls_1.xlsx")
 
