@@ -99,11 +99,7 @@ for (u in 1:length(textoTitulosXbox)) {
   break = 32
   
 }
-install.packages("xlsx")
-library(xlsx)
-# PASAR DATOS DE "R" A "EXCEL"
-write.xlsx(todosLosDatosPs4, "todosLosDatosPs4 en xls_1.xlsx")
-write.xlsx(todosLosDatosXbox, "todosLosDatosXbox en xls_1.xlsx")
+
 
 # TrabajoFinal_BigData_TiendaParis
 
